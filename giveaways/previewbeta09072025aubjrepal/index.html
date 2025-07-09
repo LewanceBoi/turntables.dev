@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta property="og:title" content="Fall Guys Giveaway Service" />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://turntables.dev/giveaways" />
+    <meta property="og:image" content="https://turntables.dev/giveaways/fggsfavicon.png" />
+    <meta property="og:description" content="LAUNCH WEEK GIVEAWAY - 3 SWEET THIEVES BANNERS!<br>Ends July 17th 2025 0:00 BST" />
+    <meta name="theme-color" content="#89CFF0">
+    <title>FGGS</title>
+    <link rel="icon" type="image/png" href="/fggsfavicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Asap:wght@700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background: #000;
+            font-family: 'Asap', sans-serif;
+        }
+        .top-bar {
+            background: linear-gradient(45deg, #B3E5FC, #F8BBD0), /* Pastel blue to pink gradient */
+                       repeating-linear-gradient(
+                           0deg,
+                           #89CFF0 0,
+                           #89CFF0 25%,
+                           rgba(217, 242, 255, 0.7) 25%,
+                           rgba(217, 242, 255, 0.7) 50%,
+                           #89CFF0 50%,
+                           #89CFF0 75%,
+                           rgba(217, 242, 255, 0.7) 75%,
+                           rgba(217, 242, 255, 0.7) 100%
+                       ); /* 4x4 checkerboard with equal squares */
+            height: 80px;
+            display: flex;
+            justify-content: space-between; /* Logo on left, GIF/text on right */
+            align-items: center;
+            padding: 0 10px; /* Few pixels from edges */
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 10;
+            background-size: 100% 100%, 20px 20px; /* Gradient stretches, tiles are 20px x 20px */
+            animation: none; /* No gradient scrolling */
+        }
+        .top-bar img {
+            height: 60px;
+        }
+        .top-bar .logo-container {
+            margin-left: 10px; /* Few pixels from left edge */
+        }
+        .top-bar .gif-container {
+            display: flex;
+            align-items: center;
+            margin-right: 10px; /* Few pixels from right edge */
+            flex-direction: row-reverse; /* Swap GIF and text positions */
+        }
+        .top-bar .gif {
+            cursor: pointer;
+            height: 60px;
+        }
+        .top-bar .link-text {
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            color: white;
+            margin-right: 10px; /* Adjusted margin for swapped order */
+            text-decoration: none;
+            font-size: 18px;
+        }
+        .content {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            position: relative;
+            top: 80px;
+        }
+        .giveaway-box {
+            background-color: #2ab0d1;
+            border: 3px solid white;
+            border-radius: 20px;
+            width: 80%;
+            max-width: 800px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            position: relative;
+        }
+        .giveaway-box img {
+            height: 150px;
+            border-radius: 15px;
+            border: 2px solid white;
+            margin-right: 20px;
+        }
+        .text-content {
+            text-align: left;
+            flex-grow: 1;
+            color: white;
+        }
+        .giveaway-box h1 {
+            font-family: 'Titan One', sans-serif;
+            font-weight: normal;
+            font-size: 20px;
+            margin: 0;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.2); /* Diagonally displaced black shadow */
+        }
+        .giveaway-box h1:nth-child(2) {
+            font-size: 24px;
+        }
+        .pill {
+            display: inline-block;
+            background-color: #34f46c;
+            color: white;
+            font-family: 'Titan One', sans-serif;
+            font-weight: normal;
+            padding: 2px 8px; /* Keep pill size the same */
+            border-radius: 20px;
+            margin: 0 0 5px 0;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.2); /* Diagonally displaced black shadow */
+            font-size: 12px; /* Shrunk text size */
+        }
+        .line {
+            border-bottom: 2px solid white;
+            margin: 10px 0;
+            width: 95%;
+        }
+        .giveaway-box p {
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            font-size: 16px;
+            text-shadow: none; /* Remove drop shadow from Asap text */
+        }
+        .countdown-pill {
+            background-color: black;
+            color: white;
+            border: 2px solid white;
+            border-radius: 20px;
+            padding: 5px 15px;
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            text-shadow: none; /* Remove drop shadow from Asap text */
+        }
+        .countdown-pill img {
+            height: 20px;
+            margin-right: 10px;
+            border: none; /* Ensure no border/outline */
+            border-radius: 0; /* Ensure no rounded corners */
+            outline: none; /* Remove any potential outline */
+        }
+        .countdown {
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            text-shadow: none; /* Remove drop shadow from Asap text */
+        }
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+        .button {
+            background-color: #32c9eb;
+            color: white;
+            font-family: 'Titan One', sans-serif;
+            font-weight: normal;
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-decoration: none;
+            cursor: pointer;
+            border: 2px solid white;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.2); /* Diagonally displaced black shadow */
+        }
+        .welcome-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2ab0d1;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 100;
+            text-align: center;
+            color: white;
+        }
+        .info-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2ab0d1;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 100;
+            text-align: center;
+            color: white;
+        }
+        .end-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #2ab0d1;
+            padding: 20px;
+            border-radius: 20px;
+            border: 3px solid white;
+            box-shadow: 0 0 10px rgba(0,0,0,0.5);
+            z-index: 100;
+            text-align: center;
+            color: white;
+        }
+        .welcome-popup h2, .info-popup h2, .end-popup h2 {
+            font-family: 'Titan One', sans-serif;
+            font-weight: normal;
+            margin-top: 0;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.2); /* Diagonally displaced black shadow */
+        }
+        .welcome-popup .line, .info-popup .line, .end-popup .line {
+            border-bottom: 2px solid white;
+            margin: 10px auto;
+            width: 95%;
+        }
+        .welcome-popup p, .info-popup p, .end-popup p {
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            text-shadow: none; /* Remove drop shadow from Asap text */
+        }
+        .welcome-popup .close, .info-popup .close, .end-popup .close {
+            background-color: #32c9eb;
+            color: white;
+            font-family: 'Titan One', sans-serif;
+            font-weight: normal;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            border: 2px solid white;
+            text-shadow: 2px 2px rgba(0, 0, 0, 0.2); /* Diagonally displaced black shadow */
+        }
+        /* Overlay to darken the background when popup is open */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+            z-index: 99; /* Below popup but above content */
+        }
+        .background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: url('https://turntables.dev/wallpaper%20(1).png') no-repeat center center/cover;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.5s ease-out;
+        }
+        .intro-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100vh;
+            background: #000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            opacity: 1;
+            transition: opacity 0.5s ease-out; /* Ensure transition works */
+        }
+        .intro-overlay img {
+            max-width: 25%;
+            max-height: 25%;
+        }
+        .no-giveaway-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, 20px);
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            color: white;
+            opacity: 0;
+            transition: opacity 1s ease-in 2s, transform 1s ease-in 2s;
+            z-index: 1;
+            pointer-events: none;
+        }
+        .confetti {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background-color: #ff0; /* Yellow confetti, adjust colors as needed */
+            opacity: 0.8;
+            border-radius: 50%;
+            animation: fall linear infinite;
+            z-index: 0;
+        }
+        @keyframes fall {
+            0% { transform: translateY(-100vh); }
+            100% { transform: translateY(100vh); }
+        }
+        /* Add 20 confetti pieces with random starting positions and delays */
+        .confetti:nth-child(1) { left: 10%; background-color: #ff0; animation-delay: 0s; animation-duration: 8s; top: -50px; }
+        .confetti:nth-child(2) { left: 20%; background-color: #f0f; animation-delay: 1s; animation-duration: 7s; top: 20%; }
+        .confetti:nth-child(3) { left: 30%; background-color: #0ff; animation-delay: 2s; animation-duration: 9s; top: -30px; }
+        .confetti:nth-child(4) { left: 40%; background-color: #f00; animation-delay: 0.5s; animation-duration: 6s; top: 40%; }
+        .confetti:nth-child(5) { left: 50%; background-color: #0f0; animation-delay: 1.5s; animation-duration: 8s; top: -20px; }
+        .confetti:nth-child(6) { left: 60%; background-color: #ff0; animation-delay: 2.5s; animation-duration: 7s; top: 60%; }
+        .confetti:nth-child(7) { left: 70%; background-color: #f0f; animation-delay: 0s; animation-duration: 9s; top: -40px; }
+        .confetti:nth-child(8) { left: 80%; background-color: #0ff; animation-delay: 1.2s; animation-duration: 6s; top: 30%; }
+        .confetti:nth-child(9) { left: 90%; background-color: #f00; animation-delay: 2.2s; animation-duration: 8s; top: -10px; }
+        .confetti:nth-child(10) { left: 15%; background-color: #0f0; animation-delay: 0.8s; animation-duration: 7s; top: 50%; }
+        .confetti:nth-child(11) { left: 25%; background-color: #ff0; animation-delay: 1.8s; animation-duration: 9s; top: -60px; }
+        .confetti:nth-child(12) { left: 35%; background-color: #f0f; animation-delay: 0.3s; animation-duration: 6s; top: 10%; }
+        .confetti:nth-child(13) { left: 45%; background-color: #0ff; animation-delay: 2.1s; animation-duration: 8s; top: -70px; }
+        .confetti:nth-child(14) { left: 55%; background-color: #f00; animation-delay: 0.7s; animation-duration: 7s; top: 70%; }
+        .confetti:nth-child(15) { left: 65%; background-color: #0f0; animation-delay: 1.3s; animation-duration: 9s; top: -20px; }
+        .confetti:nth-child(16) { left: 75%; background-color: #ff0; animation-delay: 2.4s; animation-duration: 6s; top: 40%; }
+        .confetti:nth-child(17) { left: 85%; background-color: #f0f; animation-delay: 0.4s; animation-duration: 8s; top: -50px; }
+        .confetti:nth-child(18) { left: 95%; background-color: #0ff; animation-delay: 1.9s; animation-duration: 7s; top: 20%; }
+        .confetti:nth-child(19) { left: 5%; background-color: #f00; animation-delay: 2.3s; animation-duration: 9s; top: -30px; }
+        .confetti:nth-child(20) { left: 50%; background-color: #0f0; animation-delay: 0.6s; animation-duration: 6s; top: 60%; }
+    </style>
+</head>
+<body>
+    <div class="intro-overlay">
+        <img src="fggslogo.png" alt="Intro Image">
+    </div>
+    <div class="background">
+        <!-- Confetti pieces -->
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="confetti"></div>
+        <div class="no-giveaway-text">No active giveaways, come back later!</div>
+    </div>
+    <div class="top-bar">
+        <div class="logo-container">
+            <img src="fggslogo.png" alt="fggs">
+        </div>
+        <div class="gif-container">
+            <a href="https://turntables.dev" class="link-text">turntables.dev</a>
+            <img class="gif" src="https://turntables.dev/3dgifmaker46412.gif" alt="turntables.dev" onclick="window.location.href='https://turntables.dev'">
+        </div>
+    </div>
+    <div class="content">
+        <div class="giveaway-box">
+            <img src="fggssweetthieves.png" alt="fggs">
+            <div class="text-content">
+                <span class="pill">UNCOMMON</span>
+                <h1>ACTIVE GIVEAWAY</h1>
+                <h1>LAUNCH WEEK GIVEAWAY - 3 SWEET THIEVES BANNERS!</h1>
+                <div class="line"></div>
+                <p>3 Sweet Thieves Banner codes from 2022 are up for grabs! Sign up for a chance to be one of three winners!</p>
+                <div class="countdown-pill">
+                    <img src="timer.png" alt="timer">
+                    <span class="countdown" id="countdown"></span>
+                </div>
+                <div class="buttons">
+                    <a href="https://forms.gle/Nh5EsPihC9Jvmda99" class="button">SIGN-UP</a>
+                    <button class="button" onclick="showInfoPopup()">INFO</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="overlay" id="overlay"></div>
+    <div class="welcome-popup" id="welcome-popup">
+        <h2>WELCOME TO FALL GUYS GIVEAWAY SERVICE!</h2>
+        <div class="line"></div>
+        <p>Here you can sign-up for giveaways when they are being hosted for a chance to earn exclusive and hard to obtain cosmetics in Fall Guys!<br><br>A giveaway is currently active!</p>
+        <button class="close" id="take-a-look" onclick="closeWelcomePopup()">TAKE A LOOK</button>
+    </div>
+    <div class="info-popup" id="info-popup">
+        <h2>3 SWEET THIEVES BANNERS! - INFO</h2>
+        <div class="line"></div>
+        <p>You can only sign up once per email address (Email addresses are collected so you can be emailed if<br>you win, they will not be used for anything else)<br><br>You can sign up with multiple email addresses<br><br>You can claim the Sweet Thieves banner on https://store.epicgames.com/en-US/redeem if you win</p>
+        <button class="close" onclick="hideInfoPopup()">CLOSE</button>
+    </div>
+    <div class="end-popup" id="end-popup">
+        <h2>GIVEAWAY OVER!</h2>
+        <div class="line"></div>
+        <p>Sorry, this giveaway has finished.</p>
+        <button class="close" id="exit-button" onclick="window.location.href='https://turntables.dev'">EXIT</button>
+    </div>
+    <audio id="background-music" loop>
+        <source src="4-74. Mystery Gift.wav" type="audio/wav">
+    </audio>
+
+    <script>
+        // Initial fade-in sequence and welcome popup
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded'); // Debug log
+            const overlay = document.querySelector('.intro-overlay');
+            const background = document.querySelector('.background');
+            const welcomePopup = document.getElementById('welcome-popup');
+            const overlayLayer = document.getElementById('overlay');
+            const music = document.getElementById('background-music');
+            const countdownPill = document.querySelector('.countdown-pill');
+            const buttons = document.querySelector('.buttons');
+            const endPopup = document.getElementById('end-popup');
+
+            // Check if giveaway is over
+            const target = new Date('July 17, 2025 00:00:00 GMT+0100').getTime();
+            const now = new Date().getTime();
+            const diff = target - now;
+
+            if (diff > 0) {
+                console.log('Setting up welcome popup...'); // Debug log
+                // Show welcome popup after 2 seconds
+                setTimeout(() => {
+                    console.log('Displaying welcome popup'); // Debug log
+                    welcomePopup.style.display = 'block';
+                    welcomePopup.style.opacity = '1'; // Ensure visibility
+                    overlayLayer.style.display = 'block';
+                    overlayLayer.style.opacity = '1'; // Ensure overlay is visible
+                }, 2000);
+
+                // Fade-in sequence
+                setTimeout(() => {
+                    console.log('Fading intro overlay'); // Debug log
+                    overlay.style.opacity = '0';
+                    background.style.opacity = '1';
+                }, 2000); // 2 seconds delay
+
+                setTimeout(() => {
+                    console.log('Hiding intro overlay'); // Debug log
+                    overlay.style.display = 'none';
+                }, 2500); // Hide after fade (2.5 seconds)
+            } else {
+                countdownPill.style.display = 'none';
+                buttons.style.display = 'none';
+                endPopup.style.display = 'block';
+                overlayLayer.style.display = 'block';
+            }
+        });
+
+        // Function to close welcome popup and play music with smooth fade-in
+        function closeWelcomePopup() {
+            const welcomePopup = document.getElementById('welcome-popup');
+            const overlayLayer = document.getElementById('overlay');
+            const music = document.getElementById('background-music');
+
+            welcomePopup.style.display = 'none';
+            overlayLayer.style.display = 'none';
+
+            // Start music with smooth fade-in
+            music.volume = 0; // Start at zero volume
+            music.play().catch(error => console.log("Audio play failed:", error));
+
+            let fadeIn = setInterval(() => {
+                if (music.volume < 1) {
+                    music.volume = Math.min(music.volume + 0.01, 1); // Smaller increment for smoother fade
+                } else {
+                    clearInterval(fadeIn); // Stop when volume reaches 1
+                }
+            }, 50); // Shorter interval for more steps (~2 seconds total)
+        }
+
+        // Function to show info popup
+        function showInfoPopup() {
+            const popup = document.getElementById('info-popup');
+            const overlay = document.getElementById('overlay');
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
+        }
+
+        // Function to hide info popup
+        function hideInfoPopup() {
+            const popup = document.getElementById('info-popup');
+            const overlay = document.getElementById('overlay');
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        // Function to hide end popup (already redirects via onclick)
+        function hideEndPopup() {
+            const popup = document.getElementById('end-popup');
+            const overlay = document.getElementById('overlay');
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
+        }
+
+        // Countdown and giveaway logic
+        function updateCountdown() {
+            const target = new Date('July 17, 2025 00:00:00 GMT+0100').getTime(); // July 17, 2025 00:00:00 GMT+0100
+            const now = new Date().getTime();
+            const diff = target - now;
+            const countdownPill = document.querySelector('.countdown-pill');
+            const buttons = document.querySelector('.buttons');
+            const overlay = document.getElementById('overlay');
+            const endPopup = document.getElementById('end-popup');
+
+            if (diff <= 0) {
+                countdownPill.style.display = 'none';
+                buttons.style.display = 'none';
+                endPopup.style.display = 'block';
+                overlay.style.display = 'block';
+                return;
+            }
+
+            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+
+            let text;
+            if (days > 0) {
+                text = `${days}d ${hours}h`;
+            } else if (hours > 0) {
+                text = `${hours}h ${minutes}m`;
+            } else if (minutes > 0) {
+                text = `${minutes}m ${seconds}s`;
+            } else {
+                text = `${seconds}s`;
+            }
+
+            document.getElementById('countdown').textContent = text;
+        }
+
+        // No giveaway behavior
+        function checkGiveawayStatus() {
+            const target = new Date('August 1, 2025 00:00:00 GMT+0100').getTime();
+            const now = new Date().getTime();
+            const background = document.querySelector('.background');
+            const noGiveawayText = document.querySelector('.no-giveaway-text');
+            const giveawayBox = document.querySelector('.giveaway-box');
+
+            if (now > target) {
+                background.style.transition = 'transform 2s ease-out';
+                background.style.transform = 'translateY(-50px)'; // Glide up slightly
+                noGiveawayText.style.opacity = '1';
+                noGiveawayText.style.transform = 'translate(-50%, 70px)'; // Adjust position below
+                giveawayBox.style.display = 'none';
+            }
+        }
+
+        // Run on load and interval
+        document.addEventListener('DOMContentLoaded', () => {
+            console.log('DOM loaded'); // Debug log
+            checkGiveawayStatus();
+            updateCountdown();
+            setInterval(updateCountdown, 1000);
+        });
+    </script>
+</body>
+</html>
