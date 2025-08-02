@@ -21,7 +21,7 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #00b7eb, #004aad, #001f3f);
+            background: linear-gradient(135deg, #FF006F, #FF68AA, #D100CA);
             overflow: hidden;
             font-family: 'Asap', sans-serif;
             position: relative;
@@ -86,7 +86,6 @@
         font-size: 2.5em;
         font-family: 'Asap', sans-serif;
         font-weight: 700;
-        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
         margin: 10px 0;
         z-index: 1;
     }
@@ -97,7 +96,6 @@
         font-size: 1.2em;
         font-family: 'Asap', sans-serif;
         font-weight: 400;
-        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
         margin: 5px 0 20px 0;
         z-index: 1;
     }
@@ -124,6 +122,17 @@
 
     button:hover {
         background-color: lightgrey;
+    }
+
+    /* Footer Text */
+    .footer-text {
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1em;
+        font-family: 'Asap', sans-serif;
+        font-weight: 700;
+        margin-top: 20px;
+        text-align: center;
+        z-index: 1;
     }
 
     /* Modal Styles */
@@ -181,7 +190,8 @@
     .modal-content button:hover {
         background-color: grey;
     }
-</style></head>
+</style>
+</head>
 <body>
     <div class="bubbles">
         <div class="bubble"></div>
@@ -201,47 +211,57 @@
         <div class="bubble"></div>
     </div>
 
-<div class="gif-container">
-    <img src="3dgifmaker46412.gif" alt="reimu squish gif">
-</div>
-<h1>turntables.dev</h1>
-<h2 class="subtitle">they call me Metric the way i Test Bed</h2>
-<div class="buttons">
-    <button onclick="showModal('portfolio')">portfolio</button>
-    <button onclick="window.location.href='https://x.com/metrictestbed'">my twitter</button>
-    <button onclick="window.location.href='https://www.youtube.com/@metrictestbed'">my youtube</button>
-    <button onclick="window.location.href='https://turntables.dev/giveaways'">giveaways (FGGS)</button>
-</div>
-
-<!-- Modal -->
-<div id="modal" class="modal">
-    <div class="modal-content">
-        <h2 id="modal-title">unavailable</h2>
-        <p id="modal-message">Default message</p>
-        <button onclick="closeModal()">OK</button>
+    <div class="gif-container">
+        <img src="3dgifmaker46412.gif" alt="reimu squish gif">
     </div>
-</div>
+    <h1>turntables.dev</h1>
+    <h2 class="subtitle">im metric</h2>
+    <div class="buttons">
+        <button onclick="showModal('portfolio')">portfolio</button>
+        <button onclick="window.location.href='https://x.com/metrictestbed'">my twitter</button>
+        <button onclick="window.location.href='https://www.youtube.com/@metrictestbed'">my youtube</button>
+    </div>
+    <p class="footer-text">website is broken on mobile idk how to fix sorry | you can press the g key on pc for more info about me</p>
 
-<script>
-    function showModal(type) {
-        const modal = document.getElementById('modal');
-        const title = document.getElementById('modal-title');
-        const message = document.getElementById('modal-message');
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <h2 id="modal-title">unavailable</h2>
+            <p id="modal-message">Default message</p>
+            <button onclick="closeModal()">OK</button>
+        </div>
+    </div>
 
-        if (type === 'portfolio') {
-            title.textContent = 'unavailable';
-            message.textContent = 'ill make this when i need to';
-        } else if (type === 'giveaways') {
-            title.textContent = 'unavailable';
-            message.textContent = 'ill make this when i feel like it (and want to buy more sweet thieves banner codes)';
+    <script>
+        function showModal(type) {
+            const modal = document.getElementById('modal');
+            const title = document.getElementById('modal-title');
+            const message = document.getElementById('modal-message');
+
+            if (type === 'portfolio') {
+                title.textContent = 'unavailable';
+                message.textContent = 'making this soon';
+            } else if (type === 'giveaways') {
+                title.textContent = 'unavailable';
+                message.textContent = 'ill make this when i feel like it (and want to buy more sweet thieves banner codes)';
+            } else if (type === 'about') {
+                title.textContent = 'about me';
+                message.textContent = 'im a (bad) multimedia artist from the uk\n\ni used to be lewanceboi\n\nmy main interests currently are fall guys touhou and pokemon';
+            }
+
+            modal.style.display = 'flex';
         }
 
-        modal.style.display = 'flex';
-    }
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
 
-    function closeModal() {
-        document.getElementById('modal').style.display = 'none';
-    }
-</script></body>
+        // Add event listener for 'g' key press
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'g' || event.key === 'G') {
+                showModal('about');
+            }
+        });
+    </script>
+</body>
 </html>
-
