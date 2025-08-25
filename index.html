@@ -107,7 +107,7 @@
       cursor: pointer;
       transition: background-color 0.3s;
       font-family: 'Asap', sans-serif;
-      font-weight: 700;
+      font-weight: 400;
     }
     button:hover { background-color: lightgrey; }
     .footer-text {
@@ -155,7 +155,7 @@
       border-radius: 5px;
       cursor: pointer;
       font-family: 'Asap', sans-serif;
-      font-weight: 700;
+      font-weight: 400;
     }
     .modal-content button:hover { background-color: grey; }
   </style>
@@ -172,7 +172,7 @@
   </div>
 
   <div class="gif-container">
-    <img src="./turntables.dev_files/3dgifmaker46412.gif" alt="reimu squish gif">
+    <img src="https://turntables.dev/3dgifmaker46412.gif" alt="reimu squish gif">
   </div>
   <h1>turntables.dev</h1>
   <h2 class="subtitle">im metric</h2>
@@ -194,7 +194,7 @@
     </div>
   </div>
 
-  <audio id="secret-sound" src="gkey.mp3" preload="auto"></audio>
+  <audio id="secret-sound" src="secret.mp3" preload="auto"></audio>
 
   <script>
     function showModal(type) {
@@ -209,7 +209,7 @@
         message.textContent = 'ill make this when i feel like it (and want to buy more sweet thieves banner codes)';
       } else if (type === 'about') {
         title.textContent = 'secret';
-        message.textContent = 'congrats on pressing the g key heres my secret sound';
+        message.textContent = 'congrats on pressing the g key';
         document.getElementById('secret-sound').play();
       }
       modal.style.display = 'flex';
