@@ -3,18 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>my portfolio</title>
+    <title>my blog</title>
     <link rel="icon" href="https://turntables.dev/favicon.png">
     <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;700&family=Titan+One&display=swap" rel="stylesheet">
     <style>
         body {
             margin: 0;
             padding: 0;
-            background: url(https://turntables.dev/portfolio/portfoliobg.png) repeat-x 0 0;
+            background: url(https://turntables.dev/portfolio/portfoliobg.png) repeat-x 0 0 fixed;
             background-size: var(--tile-width) 100%;
             animation: bg-scroll 120s linear infinite;
             font-family: 'Asap', sans-serif;
             color: white;
+            overflow-x: hidden;
         }
 
         @keyframes bg-scroll {
@@ -50,7 +51,7 @@
             z-index: 10;
         }
 
-        .portfolio-title {
+        .blog-title {
             font-family: 'Titan One', cursive;
             font-size: 24px;
         }
@@ -75,93 +76,90 @@
             height: 40px;
         }
 
-        .main {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-            padding-top: 63px;
-            box-sizing: border-box;
-        }
-
-        .carousel {
-            display: flex;
-            align-items: center;
-            max-width: 80vw;
-        }
-
-        .button {
-            cursor: pointer;
-            margin: 0 20px;
-            width: 60px;
-            height: 60px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .left-button img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .right-button {
-            transform: scaleX(-1);
-        }
-
-        .right-button img {
-            width: 30px;
-            height: 30px;
-        }
-
-        .item {
-            text-align: center;
-            flex: 1;
-        }
-
-        .name {
-            font-weight: bold;
-            font-size: 32px;
-        }
-
         .content {
-            margin: 20px 0;
+            padding-top: 63px;
+            padding-bottom: 40px;
+            min-height: 100vh;
         }
 
-        .content img,
-        .content video {
-            max-width: var(--item-size, 100%);
-            height: auto;
+        .header {
+            text-align: center;
+            margin: 40px 0 60px;
         }
 
-        .desc {
+        .header-bold {
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            font-size: 48px;
+            margin: 0 0 10px;
+        }
+
+        .header-normal {
+            font-family: 'Asap', sans-serif;
+            font-weight: 400;
             font-size: 24px;
+            margin: 0;
         }
 
-        .sound-cover {
-            border: 2px solid white;
-            border-radius: 20px;
-            animation: hover 2s ease-in-out infinite;
+        .blog-list {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
         }
 
-        @keyframes hover {
-            0%, 100% {
-                transform: translateY(0);
-            }
-            50% {
-                transform: translateY(-10px);
-            }
+        .no-posts {
+            text-align: center;
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px 20px;
         }
 
-        audio {
-            display: none;
+        .blog-button {
+            display: block;
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .blog-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .date {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
         }
     </style>
 </head>
 <body>
     <div class="top-bar">
-        <div class="portfolio-title">portfolio</div>
+        <div class="blog-title">blog</div>
         <a href="https://turntables.dev" class="turntables-link">
             <div class="turntables">
                 <span class="turntables-text">turntables.dev</span>
@@ -170,23 +168,23 @@
         </a>
     </div>
     <div class="top-bar-line"></div>
-    <div class="main">
-        <div class="carousel">
-            <div class="button left-button">
-                <img src="https://turntables.dev/portfolio/button.png" alt="">
-            </div>
-            <div class="item">
-                <div class="name"></div>
-                <div class="content"></div>
-                <div class="desc"></div>
-            </div>
-            <div class="button right-button">
-                <img src="https://turntables.dev/portfolio/button.png" alt="">
-            </div>
+    <div class="content">
+        <div class="header">
+            <div class="header-bold">my blog</div>
+            <div class="header-normal">i will blog here (shocking)</div>
+        </div>
+        <div class="blog-list">
+            <div class="no-posts">no blog posts here (for now)</div>
+            <a href="https://example.com/post-1" class="blog-button">
+                <div class="title">first blog post</div>
+                <div class="description">click me to see this first post on my blog</div>
+                <div class="date">DATE</div>
+            </a>
         </div>
     </div>
-    <audio id="audio" loop></audio>
     <script>
+        const showPosts = false;
+
         const bgImage = new Image();
         bgImage.src = 'https://turntables.dev/portfolio/portfoliobg.png';
         bgImage.onload = () => {
@@ -201,96 +199,13 @@
 
         window.addEventListener('resize', updateBgSize);
 
-        const items = [
-            {
-                type: 'image',
-                url: 'https://turntables.dev/portfolio/finalbeans2keyartlogoless.png',
-                name: 'FinalBeans Frightful Final-Ween Keyart',
-                desc: 'i made this fairly late into the development of finalseason 2<br>the haunted house background is from a render i did back in 2023 which i revised for this as it wasnt very good',
-                size: '70%'
-            },
-            {
-                type: 'image',
-                url: 'https://turntables.dev/portfolio/finalbeanskeyartss1logoless.png',
-                name: 'FinalBeans Finalseason 1 Keyart',
-                desc: 'i made this for finalseason 1 of finalbeans<br>i hid 2 things in this see if you can spot them',
-                size: '70%'
-            },
-            {
-                type: 'video',
-                url: 'https://turntables.dev/portfolio/cubecorruptionunitystyle.mp4',
-                name: 'Unity Styled Cube Corruption Remake',
-                desc: 'remake of the cube corruption round from ss4 in modded creative, this is 5517 budget<br>map code: 8689-6310-1956',
-                size: '100%'
-            },
-            {
-                type: 'sound',
-                sound: 'https://files.catbox.moe/hu5sya.wav',
-                cover: 'https://turntables.dev/slimefactoryalbum.png',
-                name: 'Assembly Slime',
-                desc: 'fanmade fall guys song i made based on the slime factory update<br>i had some help with the melody from jaxsonwoo',
-                size: '50%'
-            }
-        ];
-
-        let current = 0;
-        const audio = document.getElementById('audio');
-
-        function renderItem(index) {
-            const item = items[index];
-            document.querySelector('.name').textContent = item.name;
-            document.querySelector('.desc').innerHTML = item.desc;
-            const content = document.querySelector('.content');
-            content.innerHTML = '';
-            content.style.setProperty('--item-size', item.size || '100%');
-
-            if (item.type === 'image') {
-                const img = document.createElement('img');
-                img.src = item.url;
-                content.appendChild(img);
-                audio.pause();
-                audio.src = '';
-            } else if (item.type === 'video') {
-                const video = document.createElement('video');
-                video.src = item.url;
-                video.loop = true;
-                video.autoplay = true;
-                video.muted = true;
-                video.controls = true;
-                content.appendChild(video);
-                audio.pause();
-                audio.src = '';
-            } else if (item.type === 'sound') {
-                const img = document.createElement('img');
-                img.src = item.cover;
-                img.className = 'sound-cover';
-                content.appendChild(img);
-                audio.src = item.sound;
-                audio.play();
-            }
+        if (showPosts) {
+            document.querySelector('.no-posts').style.display = 'none';
+        } else {
+            document.querySelectorAll('.blog-button').forEach(button => {
+                button.style.display = 'none';
+            });
         }
-
-        document.querySelector('.left-button').addEventListener('click', () => {
-            current = (current - 1 + items.length) % items.length;
-            renderItem(current);
-        });
-
-        document.querySelector('.right-button').addEventListener('click', () => {
-            current = (current + 1) % items.length;
-            renderItem(current);
-        });
-
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'ArrowLeft') {
-                current = (current - 1 + items.length) % items.length;
-                renderItem(current);
-            } else if (e.key === 'ArrowRight') {
-                current = (current + 1) % items.length;
-                renderItem(current);
-            }
-        });
-
-        renderItem(current);
     </script>
 </body>
 </html>
