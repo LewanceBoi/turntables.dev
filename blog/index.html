@@ -4,9 +4,208 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>my blog</title>
-    <link rel="icon" type="image/png" href="https://turntables.dev/favicon.png">
+    <link rel="icon" href="https://turntables.dev/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;700&family=Titan+One&display=swap" rel="stylesheet">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: url(https://turntables.dev/portfolio/portfoliobg.png) repeat-x 0 0 fixed;
+            background-size: var(--tile-width) 100%;
+            animation: bg-scroll 120s linear infinite;
+            font-family: 'Asap', sans-serif;
+            color: white;
+            overflow-x: hidden;
+        }
+
+        @keyframes bg-scroll {
+            0% {
+                background-position: 0 0;
+            }
+            100% {
+                background-position: calc(-1 * var(--tile-width)) 0;
+            }
+        }
+
+        .top-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 60px;
+            background: linear-gradient(to right, #23028f, #8a2b79);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+            z-index: 10;
+        }
+
+        .top-bar-line {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(to right, #1a0170, #6a1f5f);
+            z-index: 10;
+        }
+
+        .blog-title {
+            font-family: 'Titan One', cursive;
+            font-size: 24px;
+        }
+
+        .turntables {
+            display: flex;
+            align-items: center;
+        }
+
+        .turntables-link {
+            text-decoration: none;
+            color: white;
+        }
+
+        .turntables-text {
+            font-weight: bold;
+            font-size: 24px;
+            margin-right: 10px;
+        }
+
+        .turntables-gif {
+            height: 40px;
+        }
+
+        .content {
+            padding-top: 63px;
+            padding-bottom: 40px;
+            min-height: 100vh;
+        }
+
+        .header {
+            text-align: center;
+            margin: 40px 0 60px;
+        }
+
+        .header-bold {
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            font-size: 48px;
+            margin: 0 0 10px;
+        }
+
+        .header-normal {
+            font-family: 'Asap', sans-serif;
+            font-weight: 400;
+            font-size: 24px;
+            margin: 0;
+        }
+
+        .blog-list {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .no-posts {
+            text-align: center;
+            font-family: 'Asap', sans-serif;
+            font-weight: 700;
+            font-size: 32px;
+            color: rgba(255, 255, 255, 0.8);
+            padding: 40px 20px;
+        }
+
+        .blog-button {
+            display: block;
+            margin-bottom: 30px;
+            padding: 25px;
+            border-radius: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            text-decoration: none;
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .blog-button:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+        }
+
+        .title {
+            font-weight: 700;
+            font-size: 24px;
+            margin-bottom: 12px;
+        }
+
+        .description {
+            font-size: 18px;
+            margin-bottom: 20px;
+            line-height: 1.5;
+        }
+
+        .date {
+            position: absolute;
+            bottom: 15px;
+            right: 20px;
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.7);
+            font-weight: 400;
+        }
+    </style>
 </head>
 <body>
-    <p>i cant be bothered to add the message for this on the main page that says ill make this later but yeah ill make this later</p>
+    <div class="top-bar">
+        <div class="blog-title">blog</div>
+        <a href="https://turntables.dev" class="turntables-link">
+            <div class="turntables">
+                <span class="turntables-text">turntables.dev</span>
+                <img class="turntables-gif" src="https://turntables.dev/3dgifmaker83760.gif" alt="mokou">
+            </div>
+        </a>
+    </div>
+    <div class="top-bar-line"></div>
+    <div class="content">
+        <div class="header">
+            <div class="header-bold">my blog</div>
+            <div class="header-normal">i will blog here (shocking)</div>
+        </div>
+        <div class="blog-list">
+            <div class="no-posts">no blog posts here (for now)</div>
+            <a href="https://example.com/post-1" class="blog-button">
+                <div class="title">first blog post</div>
+                <div class="description">click me to see this first post on my blog</div>
+                <div class="date">DATE</div>
+            </a>
+        </div>
+    </div>
+    <script>
+        const showPosts = false;
+
+        const bgImage = new Image();
+        bgImage.src = 'https://turntables.dev/portfolio/portfoliobg.png';
+        bgImage.onload = () => {
+            updateBgSize();
+        };
+
+        function updateBgSize() {
+            const scale = window.innerHeight / bgImage.height;
+            const tileWidth = bgImage.width * scale;
+            document.body.style.setProperty('--tile-width', `${tileWidth}px`);
+        }
+
+        window.addEventListener('resize', updateBgSize);
+
+        if (showPosts) {
+            document.querySelector('.no-posts').style.display = 'none';
+        } else {
+            document.querySelectorAll('.blog-button').forEach(button => {
+                button.style.display = 'none';
+            });
+        }
+    </script>
 </body>
 </html>
