@@ -21,30 +21,23 @@
       align-items: center;
       justify-content: center;
       min-height: 100vh;
-      background-color: #17003E;
+      background-color: #3a11a0;
       overflow: hidden;
       font-family: 'Asap', sans-serif;
       position: relative;
-    }
-    .bg-tiled {
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background-image: url('https://turntables.dev/final%20season%20bg%202%20leaked%20on%20my%20github.png');
-      background-repeat: repeat;
-      background-color: #1f1345;
-      background-blend-mode: overlay;
-      animation: scroll 60s linear infinite;
-    }
-    @keyframes scroll {
-      0% { background-position: 0 0; }
-      100% { background-position: 100% 200%; }
     }
     .bg-gradient {
       position: absolute;
       inset: 0;
       z-index: -1;
-      background: linear-gradient(0deg, #138C4D 0%, transparent 100%);
+      background: linear-gradient(0deg, #cb5569 0%, transparent 100%);
+    }
+    .circles {
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      overflow: hidden;
     }
     .gif-container { text-align: center; margin-bottom: 20px; z-index: 1; }
     .gif-container img { max-width: 300px; height: auto; }
@@ -91,30 +84,12 @@
       z-index: 1;
     }
     .footer-subtext {
-      color: #ff4500;
-      font-size: 0.85em;
+      color: white;
+      font-size: 0.95em;
       font-weight: 400;
       text-align: center;
-      margin-top: 5px;
+      margin-top: 2px;
       z-index: 1;
-      animation: glow 1.5s ease-in-out infinite alternate;
-      text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 30px #ff4500;
-      display: inline-block;
-    }
-    .footer-subtext span {
-      display: inline-block;
-      animation: wave 2s ease-in-out infinite;
-    }
-    .footer-subtext span.space {
-      font-size: 50%;
-    }
-    @keyframes wave {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-10px); }
-    }
-    @keyframes glow {
-      from { text-shadow: 0 0 5px #ff4500, 0 0 10px #ff4500, 0 0 15px #ff4500; }
-      to { text-shadow: 0 0 10px #ff4500, 0 0 20px #ff4500, 0 0 30px #ff4500; }
     }
     .modal {
       display: none;
@@ -151,8 +126,8 @@
   </style>
 </head>
 <body>
-  <div class="bg-tiled"></div>
   <div class="bg-gradient"></div>
+  <canvas class="circles"></canvas>
   <div class="gif-container">
     <img src="https://turntables.dev/3dgifmaker83760.gif" alt="mokou touhou">
   </div>
@@ -165,7 +140,7 @@
     <button onclick="window.location.href='https://www.youtube.com/@metrictestbed'">my youtube</button>
   </div>
   <p class="footer-text">hello if youre here from the link in my steam name</p>
-  <p class="footer-subtext"><span style="animation-delay: 0s">h</span><span style="animation-delay: 0.1s">a</span><span style="animation-delay: 0.2s">p</span><span style="animation-delay: 0.3s">p</span><span style="animation-delay: 0.4s">y</span><span class="space" style="animation-delay: 0.5s">⠀</span><span style="animation-delay: 0.6s">o</span><span style="animation-delay: 0.7s">c</span><span style="animation-delay: 0.8s">t</span><span style="animation-delay: 0.9s">o</span><span style="animation-delay: 1.0s">b</span><span style="animation-delay: 1.1s">e</span><span style="animation-delay: 1.2s">r</span><span class="space" style="animation-delay: 1.3s">⠀</span><span style="animation-delay: 1.4s">o</span><span style="animation-delay: 1.5s">o</span><span style="animation-delay: 1.6s">o</span><span style="animation-delay: 1.7s">o</span><span style="animation-delay: 1.8s">o</span><span class="space" style="animation-delay: 1.9s">⠀</span><span style="animation-delay: 2.0s">s</span><span style="animation-delay: 2.1s">p</span><span style="animation-delay: 2.2s">o</span><span style="animation-delay: 2.3s">o</span><span style="animation-delay: 2.4s">k</span><span style="animation-delay: 2.5s">y</span></p>
+  <p class="footer-subtext">29 days until december</p>
   <div id="modal" class="modal">
     <div class="modal-content">
       <h2 id="modal-title">unavailable</h2>
@@ -200,10 +175,116 @@
         showModal('about');
       }
     });
+    const canvas = document.querySelector('.circles');
+    const ctx = canvas.getContext('2d');
+    const img = document.querySelector('.gif-container img');
+    let centerX, centerY;
+
+    function resizeCanvas() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+      const rect = img.getBoundingClientRect();
+      centerX = rect.left + rect.width / 2;
+      centerY = rect.top + rect.height / 2;
+    }
+
+    const circles = [];
+    const maxCircles = 23;
+    let lastSpawn = 0;
+
+    function spawnCircle() {
+      circles.push({
+        startTime: performance.now()
+      });
+      if (circles.length > maxCircles) {
+        circles.shift();
+      }
+    }
+
+    function drawCircle(c) {
+      const elapsed = performance.now() - c.startTime;
+      const totalDuration = 25000;
+      const progress = elapsed / totalDuration;
+
+      if (progress >= 1) return;
+
+      const cappedProgress = Math.min(progress / 0.6, 1);
+      const maxSize = 3000;
+      const size = maxSize * cappedProgress;
+      const radius = size / 2;
+
+      let borderWidth;
+      const threshold = 0.42;
+      const initialMin = 8;
+      const initialMax = 55;
+      const finalMax = 140;
+
+      if (progress <= threshold) {
+        borderWidth = initialMin + (initialMax - initialMin) * (progress / threshold);
+      } else {
+        borderWidth = initialMax + (finalMax - initialMax) * ((progress - threshold) / (0.6 - threshold));
+      }
+
+      ctx.beginPath();
+      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
+      ctx.lineWidth = borderWidth;
+      ctx.strokeStyle = '#4d25a5';
+      ctx.stroke();
+    }
+
+    function animate() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      const now = performance.now();
+
+      if (now - lastSpawn > (Math.random() * 1000 + 1300)) {
+        spawnCircle();
+        lastSpawn = now;
+      }
+
+      for (let i = circles.length - 1; i >= 0; i--) {
+        const c = circles[i];
+        const elapsed = now - c.startTime;
+        if (elapsed > 25000 * 0.6) {
+          circles.splice(i, 1);
+        } else {
+          drawCircle(c);
+        }
+      }
+
+      requestAnimationFrame(animate);
+    }
+
+    window.addEventListener('load', () => {
+      resizeCanvas();
+      window.addEventListener('resize', resizeCanvas);
+
+      const now = performance.now();
+      const lifetime = 25000 * 0.6;
+      const step = lifetime / 19;
+
+      for (let i = 0; i < 20; i++) {
+        circles.push({
+          startTime: now - i * step
+        });
+      }
+
+      lastSpawn = now;
+
+      requestAnimationFrame(animate);
+    });
+
+    let ticking = false;
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (!ticking) {
+        requestAnimationFrame(() => {
+          window.scrollBy(0, e.deltaY * 0.5);
+          ticking = false;
+        });
+        ticking = true;
+      }
+    }, { passive: false });
   </script>
 </body>
 </html>
-
-
-
-
