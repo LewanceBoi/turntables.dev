@@ -140,7 +140,7 @@
     <button onclick="window.location.href='https://www.youtube.com/@metrictestbed'">my youtube</button>
   </div>
   <p class="footer-text">hello if youre here from the link in my steam name</p>
-  <p class="footer-subtext">29 days until december</p>
+  <p class="footer-subtext" id="days-until-dec">29 days until december</p>
   <div id="modal" class="modal">
     <div class="modal-content">
       <h2 id="modal-title">unavailable</h2>
@@ -255,6 +255,21 @@
       requestAnimationFrame(animate);
     }
 
+    function updateDaysUntilDec() {
+      const now = new Date();
+      const year = now.getFullYear();
+      let target = new Date(year, 11, 1);
+      if (now > target) {
+        target = new Date(year + 1, 11, 1);
+      }
+      const diffMs = target - now;
+      const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
+      const element = document.getElementById('days-until-dec');
+      if (element) {
+        element.textContent = `${diffDays} days until december`;
+      }
+    }
+
     window.addEventListener('load', () => {
       resizeCanvas();
       window.addEventListener('resize', resizeCanvas);
@@ -272,6 +287,7 @@
       lastSpawn = now;
 
       requestAnimationFrame(animate);
+      updateDaysUntilDec();
     });
 
     let ticking = false;
