@@ -1,306 +1,405 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
   <meta property="og:title" content="turntables.dev">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://turntables.dev">
   <meta property="og:image" content="https://pbs.twimg.com/media/FfibkHDWIBEqRah.jpg:large">
-  <meta property="og:description" content="Get ready to Turn some Tables in our latest update!">
+  <meta property="og:description" content="Get ready to Turn some Tables in our latest WINTER update!">
   <meta name="theme-color" content="#A80CA4">
-  <title>turntables.dev</title>
   <link rel="icon" type="image/png" href="https://turntables.dev/favicon.png">
-  <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;700&display=swap" rel="stylesheet">
+  <title>turntables.dev</title>
+  <link href="https://fonts.googleapis.com/css2?family=Asap:wght@400;700&family=Titan+One&display=swap" rel="stylesheet">
+
   <style>
-    body {
-      margin: 0;
-      padding: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      min-height: 100vh;
-      background-color: #3a11a0;
-      overflow: hidden;
-      font-family: 'Asap', sans-serif;
-      position: relative;
+    @font-face{font-family:'BeanGame';src:url('https://turntables.dev/BeanGame-Regular.otf') format('opentype');font-weight:normal;font-style:normal;font-display:swap}
+
+    :root{
+      --accent-bar:#26c6ec;
+      --outline:#ffffff;
+      --pink-outline:#ed2988;
+      --content-width:1100px;
+      --bg-solid:#0f62d3;
+
+      
+      --z-bg: 0;            
+      --z-gradient: 1;      
+      --z-snow-back: 2;    
+      --z-snow-front: 3;   
+      --z-content: 6;       
     }
-    .bg-gradient {
-      position: absolute;
-      inset: 0;
-      z-index: -1;
-      background: linear-gradient(0deg, #cb5569 0%, transparent 100%);
+
+    html,body{
+      height:100%;
+      margin:0;
+      font-family:system-ui,-apple-system,'Segoe UI',Roboto,'Helvetica Neue',Arial;
+      background:var(--bg-solid);
+      color:white;
+      overflow-x:hidden;
     }
-    .circles {
-      position: fixed;
-      inset: 0;
-      z-index: -2;
-      pointer-events: none;
-      overflow: hidden;
+
+    
+    .bg-tiled{
+      position:fixed;
+      inset:0;
+      z-index:var(--z-bg);
+      background-image:url('https://turntables.dev/Pattern_WinterRevised%20smaller.png');
+      background-repeat:repeat;
+      background-size:auto;
+      filter:brightness(100%);
+      opacity:0.3;
+      animation:scrollDiag 80s linear infinite;
+      pointer-events:none;
     }
-    .gif-container { text-align: center; margin-bottom: 20px; z-index: 1; }
-    .gif-container img { max-width: 300px; height: auto; }
-    h1 {
-      color: white;
-      font-size: 2.5em;
-      font-weight: 700;
-      margin: 10px 0;
-      z-index: 1;
+
+    @keyframes scrollDiag{
+      0%{background-position:0 0}
+      100%{background-position:100% 200%}
     }
-    h2.subtitle {
-      color: white;
-      font-size: 1.2em;
-      font-weight: 400;
-      margin: 5px 0 20px 0;
-      z-index: 1;
+
+    
+    .bg-gradient{
+      position:fixed;
+      inset:0;
+      z-index:var(--z-gradient);
+      pointer-events:none;
+      background:linear-gradient(
+        to top,
+        rgba(76,152,234,0.65) 0%,
+        rgba(76,152,234,0.25) 40%,
+        rgba(76,152,234,0.12) 70%,
+        rgba(76,152,234,0.05) 100%
+      );
     }
-    .buttons {
-      display: flex;
-      gap: 15px;
-      z-index: 1;
-      flex-wrap: wrap;
-      justify-content: center;
+
+    
+    .snow-back,.snow-front{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
     }
-    button {
-      padding: 10px 20px;
-      font-size: 1em;
-      color: black;
-      background-color: #ffffff;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      transition: background-color 0.3s;
-      font-family: 'Asap', sans-serif;
-      font-weight: 400;
+    .snow-back{z-index:var(--z-snow-back);}
+    .snow-front{z-index:var(--z-snow-front);}
+
+    .snow-flake{
+      position:absolute;
+      top:0;
+      left:0;
+      width:10px;
+      height:10px;
+      background:rgba(255,255,255,0.9);
+      border-radius:50%;
+      filter:drop-shadow(0 0 4px rgba(255,255,255,0.6));
+      will-change:transform,opacity;
     }
-    button:hover { background-color: lightgrey; }
-    .footer-text {
-      color: white;
-      font-size: 1em;
-      font-weight: 700;
-      margin-top: 20px;
-      text-align: center;
-      z-index: 1;
+
+    @keyframes fall{
+      0%{transform: translateY(-15vh) translateX(0) rotate(0deg)}
+      100%{transform: translateY(115vh) translateX(var(--drift)) rotate(360deg)}
     }
-    .footer-subtext {
-      color: white;
-      font-size: 0.95em;
-      font-weight: 400;
-      text-align: center;
-      margin-top: 2px;
-      z-index: 1;
+
+    
+    .container{min-height:100vh;display:flex;flex-direction:column;align-items:stretch;position:relative;z-index:var(--z-content)}
+
+    .hero{
+      margin:28px auto 12px;
+      width:100%;
+      max-width:var(--content-width);
+      position:relative;
+      height:56vh;
+      min-height:360px;
+      overflow:visible;
     }
-    .modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 1000;
-      justify-content: center;
-      align-items: center;
+
+    .title-wrap{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:5%;
+      text-align:center;
+      pointer-events:none;
+      width:auto;
+      z-index:calc(var(--z-content) + 1);
     }
-    .modal-content {
-      background: white;
-      padding: 20px;
-      border-radius: 5px;
-      text-align: center;
-      max-width: 400px;
-      width: 80%;
-      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+
+    .title{
+      position:relative;
+      display:inline-block;
+      line-height:1;
+      margin:0;
+      padding:0;
+      pointer-events:none;
+      font-family:'BeanGame',serif;
+      font-weight:400;
+      letter-spacing:0.02em;
+      font-size:clamp(48px,9vw,120px);
+      color:white;
+      -webkit-text-stroke:5px var(--pink-outline);
+      transform-origin:center center;
+      will-change:transform,opacity;
+      z-index:calc(var(--z-content) + 2);
     }
-    .modal-content h2 { margin: 0 0 15px; font-size: 1.5em; color: black; font-weight: 700; }
-    .modal-content p { margin: 0 0 20px; font-size: 1em; color: #333; font-weight: 400; }
-    .modal-content button {
-      padding: 8px 16px;
-      font-size: 1em;
-      background-color: lightgrey;
-      color: black;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-family: 'Asap', sans-serif;
-      font-weight: 400;
+
+    .title-shadow{
+      position:absolute;
+      left:0;
+      top:0;
+      color:black;
+      z-index:calc(var(--z-content) + 0);
+      -webkit-text-stroke:5px black;
+      transform:translate(5px,5px);
+      opacity:1;
+      pointer-events:none;
     }
-    .modal-content button:hover { background-color: grey; }
+
+    .title-main{
+      position:relative;
+      z-index:calc(var(--z-content) + 3);
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+    }
+
+    .subtitle{
+      display:block;
+      margin-top:8px;
+      font-family:'Asap',sans-serif;
+      font-weight:700;
+      font-size:clamp(14px,2.2vw,28px);
+      color:white;
+      letter-spacing:0.02em;
+      opacity:0;
+      transform:translateY(6px);
+      pointer-events:none;
+      text-shadow:2px 2px 0 rgba(0,0,0,0.3);
+      z-index:calc(var(--z-content) + 3);
+    }
+
+    .subtitle.no-outline{-webkit-text-stroke:0px transparent}
+
+    .content-wrap{max-width:var(--content-width);margin:0 auto;padding:0 18px}
+
+    .im-metric{
+      font-family:'Asap',sans-serif;
+      font-weight:400;
+      font-size:clamp(13px,1.6vw,20px);
+      color:white;
+      text-align:center;
+      margin:8px 0 6px;
+      text-shadow:none;
+      position:relative;
+      z-index:calc(var(--z-content) + 1);
+    }
+
+    .nav-bar{
+      margin:0 auto 36px;
+      background:var(--accent-bar);
+      border-radius:14px;
+      border:3px solid var(--outline);
+      padding:18px 24px;
+      position:relative;
+      overflow:hidden;
+      display:flex;
+      align-items:center;
+      gap:28px;
+      justify-content:center;
+      z-index:calc(var(--z-content) + 1);
+    }
+
+    .nav-bar::before{
+      content:'';
+      position:absolute;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      background-image:url('https://turntables.dev/chevron.png');
+      background-repeat:repeat-x;
+      background-size:160px 160px;
+      transform:translateZ(0);
+      opacity:0.3;
+      animation:chevronScroll 9s linear infinite;
+      background-position:0 center;
+    }
+
+    @keyframes chevronScroll{
+      from{background-position:0 center}
+      to{background-position:-160px center}
+    }
+
+    .nav-items{position:relative;z-index:2;display:flex;align-items:center;gap:28px}
+
+    .nav-item{
+      font-family:'Titan One',cursive;
+      font-size:20px;
+      cursor:pointer;
+      padding:6px 12px;
+      color:white;
+      display:inline-block;
+      white-space:nowrap;
+      transition:transform .12s ease;
+      user-select:none;
+      text-decoration:none;
+      text-shadow:2px 2px 0 rgba(0,0,0,0.2);
+    }
+
+    .nav-item:hover{transform:scale(1.07)}
+    .nav-item:active{transform:scale(0.95)}
+
+    .sep{width:2px;height:28px;background:white;border-radius:2px;opacity:0.95}
+
+    @media (max-width:720px){
+      .hero{height:42vh;min-height:200px}
+      .nav-bar{padding:12px 10px;gap:10px}
+      .nav-item{font-size:16px}
+      .sep{height:20px}
+    }
+
+    main{flex:1}
+
+    .separator-line{display:block;width:500px;height:3px;background:white;margin:-20px auto 20px;border-radius:0px;box-shadow:0 2px 0 rgba(0,0,0,0.2)}
+
+    .below-note{font-family:'Titan One',cursive;text-align:center;margin-top:-25px;font-size:20px;color:white;z-index:calc(var(--z-content)+1);pointer-events:none;text-shadow:2px 2px 0 rgba(0,0,0,0.2)}
+
+    
+    #secret-link{position:fixed;left:-50vw;z-index:9999;pointer-events:auto;display:block}
+    #secret-link.hidden{display:none}
+    #secret-link img{width:20vw;height:auto;display:block}
+    @keyframes secretSlide{from{left:-50vw} to{left:110vw}}
+    #secret-link.slide{animation:secretSlide 30s linear forwards}
+
   </style>
 </head>
+
 <body>
-  <div class="bg-gradient"></div>
-  <canvas class="circles"></canvas>
-  <div class="gif-container">
-    <img src="https://turntables.dev/3dgifmaker83760.gif" alt="mokou touhou">
-  </div>
-  <h1>turntables.dev</h1>
-  <h2 class="subtitle">im metric</h2>
-  <div class="buttons">
-    <button onclick="window.location.href='https://turntables.dev/blog'">blog</button>
-    <button onclick="window.location.href='https://turntables.dev/portfolio'">portfolio</button>
-    <button onclick="window.location.href='https://x.com/metrictestbed'">my twitter</button>
-    <button onclick="window.location.href='https://www.youtube.com/@metrictestbed'">my youtube</button>
-  </div>
-  <p class="footer-text">hello if youre here from the link in my steam name</p>
-  <p class="footer-subtext" id="days-until-dec">29 days until december</p>
-  <div id="modal" class="modal">
-    <div class="modal-content">
-      <h2 id="modal-title">unavailable</h2>
-      <p id="modal-message">Default message</p>
-      <button onclick="closeModal()">OK</button>
+  <div class="bg-tiled" aria-hidden="true"></div>
+  <div class="bg-gradient" aria-hidden="true"></div>
+
+  <div class="snow-back" id="snow-back" aria-hidden="true"></div>
+  <div class="snow-front" id="snow-front" aria-hidden="true"></div>
+
+  <div class="container">
+    <div class="hero">
+      <div class="title-wrap">
+        <div class="title" aria-hidden="true">
+          <div class="title-shadow">turntables.dev</div>
+          <div class="title-main">
+            turntables.dev
+            <span class="subtitle no-outline">turntables.dev</span>
+          </div>
+        </div>
+      </div>
     </div>
+
+    <main>
+      <div class="content-wrap">
+        <div class="separator-line" aria-hidden="true"></div>
+        <div class="im-metric">im metric</div>
+
+        <nav class="nav-bar" role="navigation" aria-label="Main navigation">
+          <div class="nav-items">
+            <a class="nav-item" href="https://turntables.dev/blog">blog</a>
+            <div class="sep"></div>
+            <a class="nav-item" href="https://turntables.dev/portfolio">portfolio</a>
+            <div class="sep"></div>
+            <a class="nav-item" href="https://x.com/metrictedbed">my twitter</a>
+            <div class="sep"></div>
+            <a class="nav-item" href="https://www.youtube.com/@metrictestbed">my youtube</a>
+          </div>
+        </nav>
+        <div class="below-note">happy december</div>
+      </div>
+    </main>
   </div>
-  <audio id="secret-sound" src="gkey.mp3" preload="auto"></audio>
+
   <script>
-    function showModal(type) {
-      const modal = document.getElementById('modal');
-      const title = document.getElementById('modal-title');
-      const message = document.getElementById('modal-message');
-      if (type === 'portfolio') {
-        title.textContent = 'unavailable';
-        message.textContent = 'making this soon';
-      } else if (type === 'giveaways') {
-        title.textContent = 'unavailable';
-        message.textContent = 'ill make this when i feel like it (and want to buy more sweet thieves banner codes)';
-      } else if (type === 'about') {
-        title.textContent = 'secret';
-        message.textContent = 'congrats on pressing the g key heres my secret g key sound very secret';
-        document.getElementById('secret-sound').play();
-      }
-      modal.style.display = 'flex';
-    }
-    function closeModal() {
-      document.getElementById('modal').style.display = 'none';
-    }
-    document.addEventListener('keydown', function(event) {
-      if (event.key === 'g' || event.key === 'G') {
-        showModal('about');
-      }
-    });
-    const canvas = document.querySelector('.circles');
-    const ctx = canvas.getContext('2d');
-    const img = document.querySelector('.gif-container img');
-    let centerX, centerY;
-
-    function resizeCanvas() {
-      canvas.width = window.innerWidth;
-      canvas.height = window.innerHeight;
-      const rect = img.getBoundingClientRect();
-      centerX = rect.left + rect.width / 2;
-      centerY = rect.top + rect.height / 2;
-    }
-
-    const circles = [];
-    const maxCircles = 23;
-    let lastSpawn = 0;
-
-    function spawnCircle() {
-      circles.push({
-        startTime: performance.now()
-      });
-      if (circles.length > maxCircles) {
-        circles.shift();
-      }
-    }
-
-    function drawCircle(c) {
-      const elapsed = performance.now() - c.startTime;
-      const totalDuration = 25000;
-      const progress = elapsed / totalDuration;
-
-      if (progress >= 1) return;
-
-      const cappedProgress = Math.min(progress / 0.6, 1);
-      const maxSize = 3000;
-      const size = maxSize * cappedProgress;
-      const radius = size / 2;
-
-      let borderWidth;
-      const threshold = 0.42;
-      const initialMin = 8;
-      const initialMax = 55;
-      const finalMax = 140;
-
-      if (progress <= threshold) {
-        borderWidth = initialMin + (initialMax - initialMin) * (progress / threshold);
-      } else {
-        borderWidth = initialMax + (finalMax - initialMax) * ((progress - threshold) / (0.6 - threshold));
-      }
-
-      ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, 0, Math.PI * 2);
-      ctx.lineWidth = borderWidth;
-      ctx.strokeStyle = '#4d25a5';
-      ctx.stroke();
-    }
-
-    function animate() {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-      const now = performance.now();
-
-      if (now - lastSpawn > (Math.random() * 1000 + 1300)) {
-        spawnCircle();
-        lastSpawn = now;
-      }
-
-      for (let i = circles.length - 1; i >= 0; i--) {
-        const c = circles[i];
-        const elapsed = now - c.startTime;
-        if (elapsed > 25000 * 0.6) {
-          circles.splice(i, 1);
-        } else {
-          drawCircle(c);
+    (function(){
+      function makeFlakes(container, count, minSize, maxSize){
+        for(let i=0;i<count;i++){
+          const el=document.createElement('div');
+          el.className='snow-flake';
+          const size=Math.random()*(maxSize-minSize)+minSize;
+          el.style.width=size+'px';
+          el.style.height=size+'px';
+          el.style.left=(Math.random()*100)+'%';
+          el.style.setProperty('--drift',(Math.random()*60-30)+'vw');
+          const duration=(Math.random()*12+8).toFixed(2)+'s';
+          el.style.animation=`fall ${duration} linear infinite`;
+          el.style.animationDelay=-(Math.random()*parseFloat(duration))+'s';
+          el.style.opacity=(0.6+Math.random()*0.4).toFixed(2);
+          container.appendChild(el);
         }
       }
 
-      requestAnimationFrame(animate);
-    }
+      const back=document.getElementById('snow-back');
+      const front=document.getElementById('snow-front');
+      makeFlakes(back,36,4,10);
+      makeFlakes(front,20,6,14);
 
-    function updateDaysUntilDec() {
-      const now = new Date();
-      const year = now.getFullYear();
-      let target = new Date(year, 11, 1);
-      if (now > target) {
-        target = new Date(year + 1, 11, 1);
-      }
-      const diffMs = target - now;
-      const diffDays = Math.ceil(diffMs / (1000 * 60 * 60 * 24));
-      const element = document.getElementById('days-until-dec');
-      if (element) {
-        element.textContent = `${diffDays} days until december`;
-      }
-    }
+      const title=document.querySelector('.title');
+      const subtitle=document.querySelector('.subtitle');
 
-    window.addEventListener('load', () => {
-      resizeCanvas();
-      window.addEventListener('resize', resizeCanvas);
+      title.style.transform='scale(0.01)';
+      title.style.opacity='0';
 
-      const now = performance.now();
-      const lifetime = 25000 * 0.6;
-      const step = lifetime / 19;
-
-      for (let i = 0; i < 20; i++) {
-        circles.push({
-          startTime: now - i * step
-        });
+      function animate(el,frames,opts){
+        const a=el.animate(frames,opts);
+        return a.finished;
       }
 
-      lastSpawn = now;
+      async function runSequence(){
+        try{
+          title.style.opacity='1';
 
-      requestAnimationFrame(animate);
-      updateDaysUntilDec();
-    });
+          await animate(title,
+            [{transform:'scale(0.01)'},{transform:'scale(1.15)'}],
+            {duration:240,easing:'cubic-bezier(.75,0,1,1)',fill:'forwards'}
+          );
 
-    let ticking = false;
-    window.addEventListener('wheel', (e) => {
-      e.preventDefault();
-      if (!ticking) {
-        requestAnimationFrame(() => {
-          window.scrollBy(0, e.deltaY * 0.5);
-          ticking = false;
-        });
-        ticking = true;
+          await animate(title,
+            [{transform:'scale(1.15)'},{transform:'scale(0.95)'}],
+            {duration:60,easing:'linear',fill:'forwards'}
+          );
+
+          await animate(title,
+            [{transform:'scale(0.95)'},{transform:'scale(1)'}],
+            {duration:60,easing:'linear',fill:'forwards'}
+          );
+
+          title.style.transform='scale(1)';
+
+          const fromRight=Math.random()>0.5;
+          const distance=Math.min(window.innerWidth*0.5,600);
+          const startX=(fromRight?distance:-distance);
+
+          subtitle.style.opacity='1';
+
+          await animate(subtitle,[
+            {transform:`translateX(${startX}px) scaleX(1.35)`,opacity:0,offset:0},
+            {transform:`translateX(${startX/2}px) scaleX(1.15)`,opacity:1,offset:0.5},
+            {transform:'translateX(0) scaleX(1)',opacity:1,offset:1}
+          ],{duration:520,easing:'cubic-bezier(.2,.9,.2,1)',fill:'forwards'});
+
+        }catch(e){
+          title.style.transform='scale(1)';
+          subtitle.style.opacity='1';
+          subtitle.style.transform='translateX(0)';
+        }
       }
-    }, { passive: false });
+
+      if(document.readyState==='complete'||document.readyState==='interactive'){
+        setTimeout(runSequence,120);
+      }else{
+        window.addEventListener('DOMContentLoaded',()=>setTimeout(runSequence,120));
+      }
+    })();
   </script>
-</body>
-</html>
+  <a id="secret-link" href="https://turntables.dev/secret" aria-hidden="true"><img src="https://turntables.dev/dum%20popup.png" alt="secret popup"></a>
+
+  <script>
+    (function(){
+      var secretLink = document.getElementById('secret-link');
+      if(secretLink) secretLink.classList.add('hidden');
+
+
