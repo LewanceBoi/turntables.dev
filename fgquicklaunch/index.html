@@ -1,1 +1,225 @@
-
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>FGQuickLaunch</title>
+  <link rel="icon" href="https://turntables.dev/fgquicklaunch/favicon.png">
+  <link href="https://fonts.googleapis.com/css2?family=Titan+One&family=Asap:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    @font-face {
+      font-family: 'BeanGame';
+      src: url('https://turntables.dev/BeanGame-Regular.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+    :root{
+      --bg-img: url('https://turntables.dev/fgquicklaunch/cool3dpatternbgplur.png');
+      --primary:#2ab0d1;
+      --top:#26c6ec;
+      --white:#ffffff;
+      --topbar-height:60px;
+      --max-width:820px;
+    }
+    html,body{height:100%;margin:0}
+    body{
+      background: var(--bg-img) center center / cover no-repeat fixed;
+      font-family: 'Titan One', cursive;
+      color:var(--white);
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+      box-sizing:border-box;
+    }
+    .top-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: var(--topbar-height);
+        background: linear-gradient(to right, #23028f, #8a2b79);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        z-index: 9999;
+    }
+    .top-bar-line {
+        position: fixed;
+        top: calc(var(--topbar-height));
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(to right, #1a0170, #6a1f5f);
+        z-index: 9999;
+    }
+    .blog-title {
+        font-size: 24px;
+        display:flex;
+        align-items:center;
+        gap:8px;
+    }
+    .blog-logo{height:40px}
+    .turntables {display:flex;align-items:center;gap:8px}
+    .turntables-link{display:flex;align-items:center;text-decoration:none;color:inherit}
+    .turntables-text{font-family:'BeanGame', sans-serif; font-size:18px; color:var(--white)}
+    .turntables-gif{height:28px}
+    .content {
+        padding-top: calc(var(--topbar-height) + 9px);
+        min-height: calc(100vh - calc(var(--topbar-height) + 9px));
+        box-sizing:border-box;
+        display:flex;
+        flex-direction:column;
+        align-items:center;
+        gap:24px;
+    }
+    .container{
+      width:100%;
+      max-width:var(--max-width);
+      text-align:center;
+      background: var(--primary);
+      border-radius:20px;
+      border:3px solid var(--white);
+      overflow:visible;
+      box-sizing:border-box;
+    }
+    .top-section{
+      position:relative;
+      background: var(--top);
+      border-top-left-radius:18px;
+      border-top-right-radius:18px;
+      border-bottom-left-radius:0;
+      border-bottom-right-radius:0;
+      padding:28px 28px 28px 28px;
+      box-sizing:border-box;
+    }
+    .top-divider{
+      position:absolute;
+      left:50%;
+      transform:translateX(-50%);
+      bottom:0;
+      width:90%;
+      height:3px;
+      background:var(--white);
+    }
+    .content-bottom{
+      padding:20px 28px 28px 28px;
+      box-sizing:border-box;
+    }
+    .logo{
+      display:block;
+      margin:0 auto 6px auto;
+      max-width:640px;
+      width:94%;
+      height:auto;
+    }
+    .headline{
+      color:var(--white);
+      font-size:18px;
+      margin:0 0 6px 0;
+      text-transform:none;
+    }
+    .buttons{
+      display:flex;
+      gap:28px;
+      justify-content:center;
+      align-items:flex-start;
+      flex-wrap:wrap;
+      margin-top:6px;
+    }
+    .btn-wrap{display:flex;flex-direction:column;align-items:center;gap:8px}
+    .launch-btn{display:inline-block;border:0;padding:0;background:transparent;cursor:pointer;-webkit-tap-highlight-color: transparent;transition:transform .12s ease,filter .12s ease;max-width:220px;width:100%;height:auto}
+    .launch-btn img{display:block;width:100%;height:auto;border-radius:12px}
+    .launch-btn:active{transform:scale(.995)}
+    .launch-btn:hover{transform:translateY(-3px) scale(1.01)}
+    .caption{font-size:14px;color:var(--white);letter-spacing:0;text-transform:none;text-align:center;line-height:1.1}
+    .faq-box{
+      width:100%;
+      max-width:var(--max-width);
+      background: var(--primary);
+      border-radius:20px;
+      border:3px solid var(--white);
+      box-sizing:border-box;
+      padding:20px;
+      flex: 1 1 auto;
+      display:flex;
+      flex-direction:column;
+      min-height:0;
+    }
+    .faq-inner{
+      overflow-y:auto;
+      padding-right:12px;
+    }
+    .faq-inner::-webkit-scrollbar{width:12px}
+    .faq-inner::-webkit-scrollbar-track{background: rgba(255,255,255,0.5); border-radius:999px}
+    .faq-inner::-webkit-scrollbar-thumb{background: rgba(255,255,255,1); border-radius:999px}
+    .faq-inner{scrollbar-width: thin; scrollbar-color: rgba(255,255,255,1) rgba(255,255,255,0.5)}
+    .faq-item{margin-bottom:18px}
+    .faq-question{font-family:'Titan One', cursive; font-size:18px; margin:0 0 6px 0; font-weight:400}
+    .faq-answer{font-family:'Asap', sans-serif; font-weight:700; margin:0; font-size:15px}
+    *{box-shadow:none!important}
+    body *:not(.turntables-text) { text-shadow: 2px 2px rgba(0,0,0,0.3); }
+    .turntables-text { text-shadow: none !important; }
+    @media (max-width:820px){.logo{max-width:520px}.container{max-width:720px}.faq-box{max-width:720px}}
+    @media (max-width:520px){.logo{max-width:320px}.headline{font-size:16px}.caption{font-size:13px}.buttons{gap:16px}}
+  </style>
+</head>
+<body>
+  <div class="top-bar">
+    <div class="blog-title"><img class="blog-logo" src="https://turntables.dev/fgquicklaunch/fgquicklaunch.svg" alt="logo"></div>
+    <a href="https://turntables.dev" class="turntables-link">
+      <div class="turntables">
+        <span class="turntables-text">turntables.dev</span>
+        <img class="turntables-gif" src="https://turntables.dev/favicon.png" alt="turntables">
+      </div>
+    </a>
+  </div>
+  <div class="top-bar-line"></div>
+  <div class="content">
+    <main class="container">
+      <div class="top-section">
+        <img class="logo" src="https://turntables.dev/fgquicklaunch/fgquicklaunch.svg" alt="FG Quick Launch logo" />
+        <div class="headline">Launch Fall Guys from your browser!</div>
+        <div class="top-divider" aria-hidden="true"></div>
+      </div>
+      <div class="content-bottom">
+        <div class="buttons">
+          <div class="btn-wrap">
+            <a class="launch-btn" href="com.epicgames.launcher://apps/50118b7f954e450f8823df1614b24e80%3A38ec4849ea4f4de6aa7b6fb0f2d278e1%3A0a2d9f6403244d12969e11da6713137b?action=launch&silent=true">
+              <img src="https://turntables.dev/fgquicklaunch/quicklaunchepicbutton.png" alt="Launch via Epic Games" />
+            </a>
+            <div class="caption">Launch on Epic Games</div>
+          </div>
+          <div class="btn-wrap">
+            <a class="launch-btn" href="steam://rungameid/1097150">
+              <img src="https://turntables.dev/fgquicklaunch/quicklaunchsteambutton.png" alt="Launch via Steam" />
+            </a>
+            <div class="caption">Launch on Steam</div>
+          </div>
+        </div>
+      </div>
+    </main>
+    <section class="faq-box">
+      <div class="faq-inner">
+        <div class="faq-item">
+          <h3 class="faq-question">How does this work?</h3>
+          <p class="faq-answer">Each button will open the app link for Fall Guys on the launcher that is specified (Epic Games or Steam). That link will run Fall Guys if it is installed.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Do I need to have the Epic Games/Steam Launcher open?</h3>
+          <p class="faq-answer">No, it will still work if you dont't have them open. You will just need to log into an account that has the game if you are asked to by the launcher.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question">Do I need to own Fall Guys on Epic Games/Steam for this to work?</h3>
+          <p class="faq-answer">Yes, you will need Fall Guys and one of the 2 launchers installed for this to work. If you have the Epic Games/Steam Launcher installed but do not own and have Fall Guys installed then it will not work.</p>
+        </div>
+        <div class="faq-item">
+          <h3 class="faq-question"><br></h3>
+          <p class="faq-answer">Credits:<br>@metrictestbed (me) - made this and turntables.dev<br>@ababrr6 - helped with the fall guys app links</p>
+        </div>
+      </div>
+    </section>
+  </div>
+</body>
+</html>
