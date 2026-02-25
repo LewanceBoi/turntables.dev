@@ -1,1 +1,48 @@
-
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>words of diva</title>
+<link rel="icon" href="https://turntables.dev/favicon.png">
+<link href="https://fonts.googleapis.com/css2?family=ASAP:wght@700&display=swap" rel="stylesheet">
+<style>
+html,body{height:100%;margin:0;background:#000;color:#fff;font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial}
+body{background:#000}
+.container{position:fixed;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px;padding:24px;box-sizing:border-box;text-align:center}
+img.center{max-width:90vmin;max-height:60vh;width:auto;height:auto;display:block}
+.text{font-family:'ASAP',sans-serif;font-weight:700;font-size:clamp(16px,2.5vw,28px);line-height:1.1;color:#fff;opacity:0;transform:translateY(18px);transition:opacity 500ms cubic-bezier(.2,.9,.2,1),transform 550ms cubic-bezier(.2,.9,.2,1);pointer-events:none}
+.text.visible{opacity:1;transform:translateY(0);pointer-events:auto}
+</style>
+</head>
+<body>
+<div class="container">
+<img class="center" src="https://turntables.dev/wordsofdiva/diva.png" alt="">
+<div id="text" class="text" aria-live="polite" role="status"></div>
+</div>
+<script>
+(function(){
+const url="https://turntables.dev/wordsofdiva/strings%20(thanks%20fganalyst%20api).json";
+const el=document.getElementById("text");
+function collect(o,out){
+if(!o||typeof o!=="object")return;
+if(Array.isArray(o)){for(let i=0;i<o.length;i++)collect(o[i],out);return}
+for(const k in o){
+if(!Object.prototype.hasOwnProperty.call(o,k))continue;
+const v=o[k];
+if(k==="text"&&typeof v==="string")out.push(v);
+else if(typeof v==="object")collect(v,out)
+}
+}
+function show(arr){
+if(!arr||arr.length===0)return;
+const pick=arr[Math.floor(Math.random()*arr.length)];
+el.textContent=pick;
+void el.offsetWidth;
+el.classList.add("visible");
+}
+fetch(url,{cache:"no-store"}).then(r=>{if(!r.ok)throw 0;return r.json()}).then(d=>{const a=[];collect(d,a);show(a)}).catch(()=>{});
+})();
+</script>
+</body>
+</html>
