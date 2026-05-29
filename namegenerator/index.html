@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/png" href="https://turntables.dev/namegenerator/UI_icon_Crown_4k.png">
     <title>Name-O-Matic</title>
     <style>
         @font-face {
@@ -12,13 +12,14 @@
         
         body {
             margin: 0;
-            padding: 0;
+            padding: 20px;
             height: 100vh;
             display: flex;
             justify-content: center;
             align-items: center;
             background: #2ab0d1;
             font-family: 'Asap', sans-serif;
+            box-sizing: border-box;
         }
         
         #nameContainer {
@@ -95,12 +96,38 @@
                 color: white;
             }
         }
+
+        #contentWrapper {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        #instructionDiv {
+            text-align: center;
+            font-family: 'Asap', sans-serif;
+            font-weight: bold;
+            font-size: 2.5rem;
+            color: white;
+        }
+
+        #instructionDiv img {
+            height: 1.5rem;
+            vertical-align: middle;
+            margin: 0 8px;
+        }
     </style>
 </head>
 <body>
-    <div id="nameContainer">
-        <div id="iconArea"></div>
-        <div id="nameDisplay"></div>
+    <div id="contentWrapper">
+        <div id="nameContainer">
+            <div id="iconArea"></div>
+            <div id="nameDisplay">Giddy Streaming Unicorn</div>
+        </div>
+        <div id="instructionDiv">
+            Press <img src="https://turntables.dev/namegenerator/outlines-pc_space_outline.png" alt="Space"> to generate a new name
+        </div>
     </div>
     
     <script>
@@ -135,6 +162,18 @@
             const nameDisplay = document.getElementById('nameDisplay');
             nameDisplay.textContent = `${first} ${second} ${third}`;
         }
+
+        function playGenerationSounds() {
+            const baseUrl = 'https://turntables.dev/namegenerator/';
+            
+            new Audio(baseUrl + 'UI_MainMenu_NameGenerator_Generate.wav').play().catch(e => console.log(e));
+            
+            const endNum = Math.floor(Math.random() * 3) + 1;
+            new Audio(baseUrl + `UI_MainMenu_NameGenerator_End_0${endNum}.wav`).play().catch(e => console.log(e));
+            
+            const voNum = Math.floor(Math.random() * 7) + 1;
+            new Audio(baseUrl + `UI_MainMenu_NameGenerator_End_VO_0${voNum}.wav`).play().catch(e => console.log(e));
+        }
         
         document.addEventListener('keydown', (e) => {
             if (e.code === 'Space') {
@@ -143,12 +182,14 @@
                 const nameDisplay = document.getElementById('nameDisplay');
                 nameContainer.classList.remove('pulse');
                 nameDisplay.classList.remove('pulse');
-                void nameContainer.offsetWidth; // Trigger reflow
+                void nameContainer.offsetWidth;
                 nameContainer.classList.add('pulse');
                 nameDisplay.classList.add('pulse');
                 generateName();
+                playGenerationSounds();
             }
         });
     </script>
-</body>
-</html>
+
+
+</body></html>
