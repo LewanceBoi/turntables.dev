@@ -1,1 +1,154 @@
-temp
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Name-O-Matic</title>
+    <style>
+        @font-face {
+            font-family: 'Asap';
+            src: url('https://turntables.dev/Asap-VariableFont_wdth,wght.ttf') format('truetype');
+        }
+        
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #2ab0d1;
+            font-family: 'Asap', sans-serif;
+        }
+        
+        #nameContainer {
+            display: flex;
+            width: 614px;
+            height: 174px;
+            background-image: url('https://turntables.dev/namegenerator/Banner_Monarch.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            filter: drop-shadow(8px 8px 0px rgba(0, 0, 0, 1));
+        }
+
+        #nameContainer.pulse {
+            animation: pulseContainer 0.25s ease-in-out;
+        }
+
+        #iconArea {
+            width: 25%;
+            height: 174px;
+        }
+
+        #nameDisplay {
+            width: 75%;
+            height: 174px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-shadow: 3px 3px 0px rgba(0, 0, 0, 0.4);
+            user-select: none;
+            padding: 20px;
+            box-sizing: border-box;
+            font-size: clamp(0.8rem, 5vw, 2.1rem);
+            text-align: center;
+            word-wrap: break-word;
+            font-family: 'Asap', sans-serif;
+            transform: translateY(-28px);
+            font-weight: bold;
+            overflow: hidden;
+        }
+
+        #nameDisplay.pulse {
+            animation: pulseText 0.6s ease-in-out;
+        }
+
+        @keyframes pulseContainer {
+            0% {
+                transform: scaleX(1) scaleY(1);
+            }
+            50% {
+                transform: scaleX(1.2) scaleY(1.2);
+            }
+            100% {
+                transform: scaleX(1) scaleY(1);
+            }
+        }
+
+        @keyframes pulseText {
+            0% {
+                transform: scale(1) translateY(-28px);
+                color: white;
+            }
+            30% {
+                transform: scale(1.4) translateY(-28px);
+                color: #fdf41e;
+            }
+            60% {
+                transform: scale(0.95) translateY(-28px);
+                color: #fdf41e;
+            }
+            100% {
+                transform: scale(1) translateY(-28px);
+                color: white;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div id="nameContainer">
+        <div id="iconArea"></div>
+        <div id="nameDisplay"></div>
+    </div>
+    
+    <script>
+        let nameData = null;
+        
+        (function() {
+            const url = 'https://turntables.dev/namegenerator/playername_dictionary%20(thanks%20floyzi).json';
+            
+            fetch(url, { cache: 'no-store' })
+            .then(r => { if (!r.ok) throw 0; return r.json(); })
+            .then(d => {
+                nameData = d;
+                generateName();
+            })
+            .catch((error) => {
+                console.error(error);
+                document.getElementById('nameDisplay').textContent = 'dint wjork';
+            });
+        })();
+        
+        function getRandomWord(array) {
+            return array[Math.floor(Math.random() * array.length)].word;
+        }
+        
+        function generateName() {
+            const englishNameData = nameData[0];
+            
+            const first = getRandomWord(englishNameData.first_words);
+            const second = getRandomWord(englishNameData.second_words);
+            const third = getRandomWord(englishNameData.third_words);
+            
+            const nameDisplay = document.getElementById('nameDisplay');
+            nameDisplay.textContent = `${first} ${second} ${third}`;
+        }
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.code === 'Space') {
+                e.preventDefault();
+                const nameContainer = document.getElementById('nameContainer');
+                const nameDisplay = document.getElementById('nameDisplay');
+                nameContainer.classList.remove('pulse');
+                nameDisplay.classList.remove('pulse');
+                void nameContainer.offsetWidth; // Trigger reflow
+                nameContainer.classList.add('pulse');
+                nameDisplay.classList.add('pulse');
+                generateName();
+            }
+        });
+    </script>
+</body>
+</html>
